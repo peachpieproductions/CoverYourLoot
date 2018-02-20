@@ -1,0 +1,69 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1727383464358290}
+  m_IsPrefabParent: 1
+--- !u!1 &1727383464358290
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4962813700254796}
+  - component: {fileID: 114709040177406934}
+  m_Layer: 0
+  m_Name: Data
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4962813700254796
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1727383464358290}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 533.731, y: 436.2467, z: -9.877188}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114709040177406934
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1727383464358290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41b456ced4be8fa429a6d7c31285d43c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardSprites:
+  - {fileID: 21300000, guid: ef8e2b704a07c2a42a7d37ea4825b271, type: 3}
+  - {fileID: 21300000, guid: a61fd1e6c46d71648a8d2c74df7ab5f0, type: 3}
+  - {fileID: 21300000, guid: 19151fdb732c7944b86e6c80041ad784, type: 3}
+  - {fileID: 21300000, guid: 55e97e599ceffa14988e1778a9d3db5e, type: 3}
+  - {fileID: 21300000, guid: 429dd419b1d82d44d9445350420bdc51, type: 3}
+  - {fileID: 21300000, guid: 4b6f995cca6756644ad04bf0fd599daf, type: 3}
+  - {fileID: 21300000, guid: 600e05555126a5d41a23bbcb6a601d0c, type: 3}
+  - {fileID: 21300000, guid: 4a93cc20651936644bf4b6d0af543dfd, type: 3}
+  - {fileID: 21300000, guid: 7e091347876ad6548a403a3dd6e6bc64, type: 3}
+  - {fileID: 21300000, guid: ada56aa9b16fdf94fa4a32f0db418759, type: 3}
+  - {fileID: 21300000, guid: 0d0d2d395e67fdf4ab2fc6c851fdc96a, type: 3}
+  - {fileID: 21300000, guid: 638645b6d39547345a8894f58a924204, type: 3}
+  - {fileID: 21300000, guid: 902ab00af61c6384db2891df28e0cf57, type: 3}
+  alphabet: ABCDEFGHIJKLMNOPQRSTUVWXYZ
+  worth: 0000000050c30000a8610000204e0000983a0000983a000010270000102700001027000088130000881300008813000088130000

@@ -1,0 +1,115 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1481288627436584}
+  m_IsPrefabParent: 1
+--- !u!1 &1481288627436584
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4992248227574396}
+  - component: {fileID: 114250060385896606}
+  - component: {fileID: 114213395360304336}
+  - component: {fileID: 114849766300784182}
+  - component: {fileID: 114517275437999150}
+  - component: {fileID: 114189598748288622}
+  m_Layer: 0
+  m_Name: PlayerManager1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4992248227574396
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1481288627436584}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 640.48114, y: 362.265, z: -5.662144}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114189598748288622
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1481288627436584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b4c9ab998d74bf4fa867fd801d2618f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  control: MessageConfirmation
+  player: 0
+--- !u!114 &114213395360304336
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1481288627436584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca345cda08cd5e248a2bec780e660ed7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  control: Hand
+  player: 0
+--- !u!114 &114250060385896606
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1481288627436584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 075a0578fa42701469e373b048e62fc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerStack: []
+  p: 0
+  bcMessageConfirmation: {fileID: 114189598748288622}
+--- !u!114 &114517275437999150
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1481288627436584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6f8983642bb1474398547180940a989, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  control: pairstr
+  player: 0
+  notifyMethod: CreatePair
+  callType: 1
+--- !u!114 &114849766300784182
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1481288627436584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28ef3efd5bd70d948ba3b60ee3f03055, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  control: discard
+  player: 0
+  notifyMethod: DiscardCard
