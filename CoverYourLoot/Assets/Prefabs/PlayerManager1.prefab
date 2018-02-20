@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 114849766300784182}
   - component: {fileID: 114517275437999150}
   - component: {fileID: 114189598748288622}
+  - component: {fileID: 114238564195077448}
   m_Layer: 0
   m_Name: PlayerManager1
   m_TagString: Untagged
@@ -70,6 +71,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   control: Hand
   player: 0
+--- !u!114 &114238564195077448
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1481288627436584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6f8983642bb1474398547180940a989, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  control: challenge
+  player: 0
+  notifyMethod: StartChallenge
+  callType: 1
 --- !u!114 &114250060385896606
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -81,9 +97,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 075a0578fa42701469e373b048e62fc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AI: 0
+  AIDone: 0
   playerStack: []
   p: 0
   bcMessageConfirmation: {fileID: 114189598748288622}
+  totalWorth: 0
 --- !u!114 &114517275437999150
 MonoBehaviour:
   m_ObjectHideFlags: 1

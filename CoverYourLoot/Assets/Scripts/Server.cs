@@ -37,9 +37,6 @@ public class Server : MonoBehaviour {
         Initialize();
         StartCoroutine(DealCards());
         StartCoroutine(UpdateHands());
-
-        //test
-        //Debug.Log("A"[0] - 64);
     }
 
     // Update is called once per frame
@@ -93,6 +90,10 @@ public class Server : MonoBehaviour {
                 else str += "A"; //empty discard pile
                 str += i; //player number
                 str += playerTurn; //current turn
+                for (var j = 0; j < 4; j++) { //Send Over Top Stacks
+                    if (pm[j].playerStack.Count > 1) str += data.alphabet[pm[j].playerStack[pm[j].playerStack.Count-1].type];
+                    else str += "A";
+                }
 
                 //send string to client
                 bcHandStr[i].setValue(str);

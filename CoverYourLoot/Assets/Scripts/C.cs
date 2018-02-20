@@ -15,17 +15,28 @@ public class C : MonoBehaviour {
     public Text playerNumberText;
     public Text yourTurnText;
     public GameObject pairWithDiscardPileButton;
+    public GameObject challengeUI;
+    public Transform topStacksTran;
     public CardClient[] cards;
     public int[] cardIds;
+    public int[] topStacks;
     public List<int> cardsSelected;
     public bool discarding;
     public bool isTurn;
     public int currentDiscard;
     public bool canMatchWithDiscard;
     float wait;
+    public int pnum;
+
+    //challenging
+    public bool isChallenging;
+    public bool isBeingChallenged;
+    public int playerToChallenge;
+    public int cardToUseInChallenge;
 
     //bc and data
     public StringDataClientController dcNewPair;
+    public StringDataClientController dcChallenge;
     public IntDataClientController dcDiscardCard;
 
 	// Use this for initialization
@@ -38,7 +49,14 @@ public class C : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        
+        if (isChallenging) {
+            if (playerToChallenge != -1 && cardToUseInChallenge != -1) {
+                var str = "";
+                str += playerToChallenge;
+                str += cardToUseInChallenge;
+                dcChallenge.setValue(str);
+            }
+        }
     }
 
     public void EnableDiscarding() {
@@ -88,7 +106,7 @@ public class C : MonoBehaviour {
                     }
                 } else if (cardsSelected.Count == 1) {
                     if (currentDiscard > 0) {
-                        if (cardIds[cardsSelected[0]] == currentDiscard || currentDiscard < 3) { //can match with discard
+                        if (cardIds[cardsSelected[0]] == currentDiscard || currentDiscard < 3 || cardIds[cardsSelected[0]] < 3) { //can match with discard
                             if (!canMatchWithDiscard) {
                                 canMatchWithDiscard = true;
                                 pairWithDiscardPileButton.SetActive(true);
@@ -120,8 +138,11 @@ public class C : MonoBehaviour {
                 cardIds[i] = handStr[i] - 65;
             }
             currentDiscard = handStr[4] - 65;
-            var pnum = int.Parse(handStr.Substring(5, 1));
+            pnum = int.Parse(handStr.Substring(5, 1));
             var playerTurn = int.Parse(handStr.Substring(6, 1));
+            for (var i = 0; i < 4; i++) { //top stacks
+                topStacks[i] = handStr[7 + i] - 65;
+            }
             var isTurnLastFrame = isTurn;
             if (playerTurn == pnum) isTurn = true; else isTurn = false;
             if (!isTurnLastFrame && isTurn) { //start turn
@@ -131,6 +152,43 @@ public class C : MonoBehaviour {
             else yourTurnText.text = "Waiting...";
             playerNumberText.text = "Player " + (pnum+1);
         }
+    }
+
+    public void StartChallenge() {
+        challengeUI.transform.Find("ChallengeText").GetComponent<Text>().text = "Who Do You Want to Challenge?";
+        playerToChallenge = -1;
+        cardToUseInChallenge = -1;
+        for (var i = 0; i < 4; i++) { //set up Challenge screen - compare slots
+            topStacksTran.GetChild(i).GetChild(2).gameObject.SetActive(true);
+            for (var j = 0; j < 4; j++) { //my hand = j
+                topStacksTran.GetChild(i).GetChild(0).GetComponent<Image>().sprite = data.cardSprites[topStacks[i]];
+                if (cardIds[j] > 0 && topStacks[i] > 0 && i != pnum) {
+                    if (topStacks[i] == cardIds[j] || cardIds[j] < 3) { //unblock card - can challenge
+                        topStacksTran.GetChild(i).GetChild(2).gameObject.SetActive(false);
+                    }
+                }
+            }
+        }
+        challengeUI.SetActive(true);
+        isChallenging = true;
+    }
+
+    public void PickCardForChallenge() {
+        challengeUI.transform.Find("ChallengeText").GetComponent<Text>().text = "Which Card Do You Want to Challenge With?";
+        for (var i = 0; i < 4; i++) { //set up Challenge screen - compare slots
+            topStacksTran.GetChild(i).GetChild(2).gameObject.SetActive(true);
+            topStacksTran.GetChild(i).GetChild(0).GetComponent<Image>().sprite = data.cardSprites[cardIds[i]];
+            if (cardIds[i] > 0) {
+                if (cardIds[i] == topStacks[playerToChallenge] || cardIds[i] < 3) {
+                    topStacksTran.GetChild(i).GetChild(2).gameObject.SetActive(false);
+                }
+            }
+        }
+    }
+
+    public void CancelChallenge() {
+        challengeUI.SetActive(false);
+        isChallenging = false;
     }
 
     public void GotMessageConfirmation(BoolBackchannelType b) {

@@ -12,6 +12,7 @@ public class CardClient : MonoBehaviour {
     public bool faceUp;
     Image image;
     public bool selected;
+    public bool isChallengeCard;
 
     private void Awake() {
         startPos = transform.localPosition;
@@ -22,7 +23,7 @@ public class CardClient : MonoBehaviour {
     void Start () {
         //C.c.cardIds[slot] = Random.Range(1,13);
         image = GetComponent<Image>();
-        image.enabled = false;
+        if(!isChallengeCard) image.enabled = false;
     }
 	
 	// Update is called once per frame
@@ -36,7 +37,17 @@ public class CardClient : MonoBehaviour {
     }
 
     public void Clicked() {
-        if (C.c.cardsSelected.Count < 2 || selected) {
+        if (isChallengeCard) {
+            if (C.c.playerToChallenge == -1) {
+                C.c.playerToChallenge = slot;
+                C.c.PickCardForChallenge();
+            } else if (C.c.cardToUseInChallenge == -1) {
+                C.c.cardToUseInChallenge = slot;
+                C.c.challengeUI.SetActive(false);
+                //send off card HERE
+            }
+        }
+        else if (C.c.cardsSelected.Count < 2 || selected) {
             if (!selected) { //check for matching card
                 C.c.cardsSelected.Add(slot);
                 
@@ -74,7 +85,7 @@ public class CardClient : MonoBehaviour {
     IEnumerator Receive() {
         faceUp = false;
         selected = false;
-        GetComponent<Image>().sprite = C.c.data.cardSprites[0];
+        image.sprite = C.c.data.cardSprites[0];
         inHand = true;
         yield return null;
         image.enabled = true;
@@ -88,7 +99,7 @@ public class CardClient : MonoBehaviour {
         id = C.c.cardIds[slot];
         AudioManager.am.PlaySound(1);
         while (transform.localScale.x < 1) {
-            if (transform.localScale.x >= 0 && !faceUp) { faceUp = true; GetComponent<Image>().sprite = C.c.data.cardSprites[id]; }
+            if (transform.localScale.x >= 0 && !faceUp) { faceUp = true; image.sprite = C.c.data.cardSprites[id]; }
             transform.localScale += new Vector3(.1f, 0, 0);
             yield return null;
         }

@@ -100,6 +100,13 @@ public class PlayerManager : MonoBehaviour {
         discarding = false;
     }
 
+    public void StartChallenge(StringBackchannelType chalStr) {
+        if (chalStr != null) {
+           // Debug.Log(chalStr.STRING_VALUE);
+
+        }
+    }
+
     public void CreatePair(StringBackchannelType s) {
         if (c.playerTurn == p) {
             if (s.STRING_VALUE != null) {
@@ -130,6 +137,7 @@ public class PlayerManager : MonoBehaviour {
         var img = newStackImg.GetComponent<Image>();
         img.enabled = true;
         bool sprSet = false;
+        bool typeSet = false;
         Stack newStack = new Stack();
         int count = 0;
         for (var i = 0; i < 4; i++) {
@@ -140,7 +148,7 @@ public class PlayerManager : MonoBehaviour {
                 if (ID == 1) newStack.gold++;
                 else if (ID == 2) newStack.silver++;
                 else newStack.count++;
-                if (ID > 2) newStack.type = ID;
+                if (!typeSet || ID > 2) { newStack.type = ID; typeSet = true; }
                 DrawCard(i, 1f + count * .15f);
             }
             if (i == 3 && count == 1) { //use discard pile
@@ -150,7 +158,7 @@ public class PlayerManager : MonoBehaviour {
                 if (IDdisc == 1) newStack.gold++;
                 else if (IDdisc == 2) newStack.silver++;
                 else newStack.count++;
-                if (IDdisc > 2) newStack.type = IDdisc;
+                if (!typeSet || IDdisc > 2) { newStack.type = IDdisc; typeSet = true; }
                 c.discardPile.RemoveAt(c.discardPile.Count - 1);
                 if (c.discardPile.Count == 0) c.discardPileTran.GetComponent<Image>().enabled = false;
                 else c.discardPileTran.GetComponent<Image>().sprite = c.data.cardSprites[c.discardPile[c.discardPile.Count - 1]];
