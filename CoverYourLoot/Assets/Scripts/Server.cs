@@ -15,6 +15,7 @@ public class Server : MonoBehaviour {
     public Transform discardPileTran;
     public GameObject[] prefabs;
     public GameObject canvas;
+    public GameObject challengePanel;
     public static int[,] playerHand = new int[4, 4];
     public GameObject[] playerManagers = new GameObject[4];
     public GameObject[] playerPanels = new GameObject[4];
