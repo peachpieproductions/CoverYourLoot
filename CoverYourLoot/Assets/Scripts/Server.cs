@@ -10,6 +10,7 @@ public class Server : MonoBehaviour {
 
     
     public static Server c;
+    public bool AIWaitTime;
     public Data data;
     public Transform deckTran;
     public Transform discardPileTran;
@@ -82,29 +83,65 @@ public class Server : MonoBehaviour {
     }
 
     public IEnumerator Challenge(int victim, int cardSlot, int p, int type) {
+Debug.Log("Start Challenge _____");
         challengeType = type;
         challengePanel.SetActive(true);
+        pm[p].cardToAttackWith = cardSlot;
         int[] P = new int[2];
         P[0] = p;
         P[1] = victim;
-        pm[0].inChallenge = true;
-        pm[1].inChallenge = true;
+Debug.Log("victim: " + victim);
+Debug.Log("attacker: " + p);
+        pm[p].inChallenge = true;
+        pm[victim].inChallenge = true;
         int round = 0;
         int turn = 0;
         //int cardSlotSelected = cardSlot;
         while (true) {
-            if (pm[turn].cardToAttackWith != 0) {
-                if (pm[turn].cardToAttackWith == 5) {
-                    //player forfeited
+            if (pm[P[turn]].cardToAttackWith != 0) {
+Debug.Log("P" + P[turn] + " used slot " + pm[P[turn]].cardToAttackWith);
+                if (pm[P[turn]].cardToAttackWith == 5) { //forfeit
+                    if (P[turn] == victim) { //victim forfeited
+                        //animate cards going to attacker
+Debug.Log("victim forfeited");
+                        var victimStack = pm[victim].playerStack[pm[victim].playerStack.Count - 1];
+                        pm[p].playerStack.Add(victimStack);
+                        pm[victim].playerStack.RemoveAt(pm[victim].playerStack.Count - 1);
+                        pm[p].UpdateStackVisual();
+                        pm[victim].UpdateStackVisual();
+                    } else { //attacker forfeited
+Debug.Log("attacker forfeited");
+                        //animate cards going to victim
+                    }
+                    pm[p].inChallenge = false;
+                    pm[victim].inChallenge = false;
+                    challengePanel.SetActive(false);
+                    challengeType = 0;
+                    NextTurn();
+                    yield break;
                 }
                 //turn on card, set graphic
                 challengePanel.transform.GetChild(turn).GetChild(round).GetComponent<Image>().enabled = true;
-                challengePanel.transform.GetChild(turn).GetChild(round).GetComponent<Image>().sprite = data.cardSprites[pm[turn].cardToAttackWith];
+                challengePanel.transform.GetChild(turn).GetChild(round).GetComponent<Image>().sprite = data.cardSprites[playerHand[P[turn], pm[P[turn]].cardToAttackWith-1]];
+                playerHand[P[turn], pm[P[turn]].cardToAttackWith - 1] = 0;
+                pm[P[turn]].DrawCard(pm[P[turn]].cardToAttackWith - 1);
 
-                pm[turn].cardToAttackWith = 0;
-                pm[turn].isChallengeTurn = false;
-                turn++; if (turn > 1) { turn = 0; round++; }
-                pm[turn].isChallengeTurn = true;
+                if (round == 0) {
+                    challengePanel.transform.GetChild(1).GetChild(0).GetComponent<Image>().sprite = data.cardSprites[challengeType];
+                }
+
+                //add to stack
+                var stack = pm[victim].playerStack[pm[victim].playerStack.Count - 1];
+                if (challengeType == 1) stack.gold++;
+                else if (challengeType == 2) stack.silver++;
+                else stack.count++;
+                pm[victim].playerStack[pm[victim].playerStack.Count - 1] = stack;
+
+                pm[P[turn]].cardToAttackWith = 0;
+                pm[P[turn]].isChallengeTurn = false;
+                turn++; if (turn > 1) turn = 0;
+                if (turn == 1) round++;
+                pm[P[turn]].isChallengeTurn = true;
             }
             yield return null;
         }
@@ -134,7 +171,7 @@ public class Server : MonoBehaviour {
                 //send string to client
                 bcHandStr[i].setValue(str);
             }
-            yield return new WaitForSeconds(.1f);
+            yield return new WaitForSeconds(.15f);
         }
     }
 

@@ -46,8 +46,20 @@ public class PlayerManager : MonoBehaviour {
         c.playerNames[p].text = "AI";
         yield return new WaitForSeconds(6f);
         while (AI) {
+            if (isChallengeTurn) {
+                yield return new WaitForSeconds(Random.Range(4f, 7f));
+                for (var i = 0; i < 4; i++) {
+                    if (Server.playerHand[p,i] == Server.c.challengeType || Server.playerHand[p, i] == 1 || Server.playerHand[p, i] == 2) {
+                        cardToAttackWith = i + 1;
+                        break;
+                    }
+                } if (cardToAttackWith == 0) { //no options, forfeit
+                    cardToAttackWith = 5;
+                }
+            }
             if (c.playerTurn == p && !AIDone) {
-                yield return new WaitForSeconds(Random.Range(2.5f,4f));
+                if (Server.c.AIWaitTime) yield return new WaitForSeconds(Random.Range(2.5f,4f));
+                else yield return new WaitForSeconds(.15f);
                 //Try to make a pair
                 Vector2 pair = new Vector2(0, 0);
                 for (var i = 0; i < 4; i++) {
@@ -108,9 +120,11 @@ public class PlayerManager : MonoBehaviour {
         if (chalStr != null) {
             var s = chalStr.STRING_VALUE;
             if (s == "") return;
-            cardToAttackWith = int.Parse(s.Substring(1, 1));
+            cardToAttackWith = int.Parse(s.Substring(1, 1))+1;
+            var victim = int.Parse(s.Substring(0, 1));
             if (!inChallenge) {
-                StartCoroutine(Server.c.Challenge(int.Parse(s.Substring(0, 1)), cardToAttackWith, p,Server.playerHand[p,cardToAttackWith]));
+                StartCoroutine(Server.c.Challenge(victim, cardToAttackWith, p,Server.c.pm[victim].playerStack[Server.c.pm[victim].playerStack.Count-1].type));
+                cardToAttackWith = 0;
             } 
         }
     }
@@ -119,7 +133,7 @@ public class PlayerManager : MonoBehaviour {
         if (c.playerTurn == p) {
             if (s.STRING_VALUE != null) {
                 if (s.STRING_VALUE == "0000") return;
-                Debug.Log(s.STRING_VALUE);
+                //Debug.Log(s.STRING_VALUE);
                 if (s.STRING_VALUE.Length > 4) return;
                 Vector2 slots = new Vector2(-1,-1);
                 for (var i = 0; i < 4; i++) {
@@ -144,7 +158,6 @@ public class PlayerManager : MonoBehaviour {
         }
         var img = newStackImg.GetComponent<Image>();
         img.enabled = true;
-        bool sprSet = false;
         bool typeSet = false;
         Stack newStack = new Stack();
         int count = 0;
@@ -152,7 +165,7 @@ public class PlayerManager : MonoBehaviour {
             if (slots.x == i || slots.y == i) {
                 count++;
                 var ID = Server.playerHand[p, i];
-                if (!sprSet || ID > 2) { img.sprite = c.data.cardSprites[ID]; sprSet = true; }
+                //if (!sprSet || ID > 2) { img.sprite = c.data.cardSprites[ID]; sprSet = true; }
                 if (ID == 1) newStack.gold++;
                 else if (ID == 2) newStack.silver++;
                 else newStack.count++;
@@ -162,7 +175,7 @@ public class PlayerManager : MonoBehaviour {
             if (i == 3 && count == 1) { //use discard pile
                 var IDdisc = c.discardPile[c.discardPile.Count - 1];
                 c.CreateAnimatedCard(c.discardPileTran.position, newStackImg.transform.position, 15, 0, IDdisc);
-                if (!sprSet || IDdisc > 2) { img.sprite = c.data.cardSprites[IDdisc]; sprSet = true; }
+                //if (!sprSet || IDdisc > 2) { img.sprite = c.data.cardSprites[IDdisc]; sprSet = true; }
                 if (IDdisc == 1) newStack.gold++;
                 else if (IDdisc == 2) newStack.silver++;
                 else newStack.count++;
@@ -171,10 +184,22 @@ public class PlayerManager : MonoBehaviour {
                 if (c.discardPile.Count == 0) c.discardPileTran.GetComponent<Image>().enabled = false;
                 else c.discardPileTran.GetComponent<Image>().sprite = c.data.cardSprites[c.discardPile[c.discardPile.Count - 1]];
             }
+            img.sprite = c.data.cardSprites[newStack.type];
         }
         playerStack.Add(newStack);
         StartSendMessageConfirmation();
         c.NextTurn();
+    }
+
+    public void UpdateStackVisual() {
+        for (var i = 0; i < 4; i++) {
+            var stackVisual = c.playerPanels[p].transform.GetChild(0).GetChild(3-i).GetComponent<Image>();
+            if (playerStack.Count > i) {
+                var stack = playerStack[playerStack.Count-1-i];
+                stackVisual.enabled = true;
+                stackVisual.sprite = c.data.cardSprites[stack.type];
+            }
+        }
     }
 
     public void DrawCard(int slot, float delay = 0) {

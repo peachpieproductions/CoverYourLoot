@@ -37,10 +37,11 @@ public class CardClient : MonoBehaviour {
     }
 
     public void Clicked() {
-        if (C.c.isChallengeTurn == 1) {
+        if (C.c.isChallengeTurn == 1 && isChallengeCard) {
             if (C.c.cardToUseInChallenge == -1) {
-                C.c.playerToChallenge = slot;
+                C.c.cardToUseInChallenge = slot;
                 C.c.challengeTurnUI.SetActive(false);
+                C.c.wait = 1f;
             }
         }
         else if (isChallengeCard) {
@@ -70,7 +71,7 @@ public class CardClient : MonoBehaviour {
 
     public void TakeCard() {
         C.c.cardIds[slot] = 0;
-        StartMoveToPosition(C.c.cards[C.c.cardsSelected[0]].startPos + Vector3.up * 500);
+        StartMoveToPosition(startPos + Vector3.up * 500);
         inHand = false;
         selected = false;
     }

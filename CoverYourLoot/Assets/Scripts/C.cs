@@ -26,11 +26,10 @@ public class C : MonoBehaviour {
     public bool isTurn;
     public int currentDiscard;
     public bool canMatchWithDiscard;
-    float wait;
+    public float wait;
     public int pnum;
 
     //challenging (get from server)
-    public int inChallenge; // 0 - not in challenge, 1 - in challenge
     public int isChallengeTurn; // 0 - is not turn, 1 - is turn
     public int challengeType;
     
@@ -60,8 +59,12 @@ public class C : MonoBehaviour {
                 str += playerToChallenge;
                 str += cardToUseInChallenge;
                 dcChallenge.setValue(str);
+                challengeType = cardIds[cardToUseInChallenge];
+                cards[cardToUseInChallenge].TakeCard();
                 playerToChallenge = -1;
                 cardToUseInChallenge = -1;
+                isChallenging = false;
+                wait = 1f;
             }
         }
         if (isChallengeTurn == 1) {
@@ -70,6 +73,7 @@ public class C : MonoBehaviour {
                 str += 0;
                 str += cardToUseInChallenge;
                 dcChallenge.setValue(str);
+                if (cardToUseInChallenge < 4) cards[cardToUseInChallenge].TakeCard();
                 playerToChallenge = -1;
                 cardToUseInChallenge = -1;
             }
@@ -138,12 +142,14 @@ public class C : MonoBehaviour {
                 }
             }
 
-            for (var i = 0; i < 4; i++) {
-                if (!cards[i].inHand && cardIds[i] > 0) {
-                    cards[i].StartReceive();
+            if (challengeType == 0) {
+                for (var i = 0; i < 4; i++) {
+                    if (!cards[i].inHand && cardIds[i] > 0) {
+                        cards[i].StartReceive();
+                    }
                 }
             }
-            yield return new WaitForSeconds(.1f);
+            yield return new WaitForSeconds(.15f);
         }
     }
 
@@ -163,9 +169,9 @@ public class C : MonoBehaviour {
             challengeType = int.Parse(handStr.Substring(11, 1));
             isChallengeTurn = int.Parse(handStr.Substring(12, 1));
 
-            if (isChallengeTurn == 1) {
+            if (isChallengeTurn == 1 && wait == 0) {
                 StartChallengeTurn();
-            }
+            } 
             var isTurnLastFrame = isTurn;
             if (playerTurn == pnum) isTurn = true; else isTurn = false;
             if (!isTurnLastFrame && isTurn) { //start turn
@@ -214,16 +220,23 @@ public class C : MonoBehaviour {
         isChallenging = false;
     }
 
+    public void GiveUpChallenge() {
+        challengeTurnUI.SetActive(false);
+        cardToUseInChallenge = 4;
+        wait = 1f;
+    }
+
     public void StartChallengeTurn() {
         if (!challengeTurnUI.activeSelf) {
             for (var i = 0; i < 4; i++) { //set up Challenge screen - compare slots
-                challengeTurnUI.transform.GetChild(0).GetChild(i).GetChild(2).gameObject.SetActive(true);
+                challengeTurnUI.transform.GetChild(0).GetChild(i).GetChild(1).gameObject.SetActive(true);
                 challengeTurnUI.transform.GetChild(0).GetChild(i).GetChild(0).GetComponent<Image>().sprite = data.cardSprites[cardIds[i]];
-                if (cardIds[i] == challengeType) { challengeTurnUI.transform.GetChild(0).GetChild(i).GetChild(2).gameObject.SetActive(false); }
+                if (cardIds[i] == challengeType || cardIds[i] == 1 || cardIds[i] == 2) { challengeTurnUI.transform.GetChild(0).GetChild(i).GetChild(1).gameObject.SetActive(false); }
             }
             challengeTurnUI.SetActive(true);
             dcChallenge.setValue(""); //reset inputs
             StartCoroutine(ChallengeTurn());
+            wait = 1f;
         }
     }
 
@@ -245,6 +258,7 @@ public class C : MonoBehaviour {
                 card.StartMoveToPosition(card.startPos);
             }
         }
+        challengeUI.SetActive(false);
         discarding = false;
         cardsSelected.Clear();
         dcDiscardCard.setValue(0);
