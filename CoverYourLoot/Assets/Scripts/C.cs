@@ -16,6 +16,7 @@ public class C : MonoBehaviour {
     public Text yourTurnText;
     public GameObject pairWithDiscardPileButton;
     public GameObject challengeUI;
+    public GameObject challengeTurnUI;
     public Transform topStacksTran;
     public CardClient[] cards;
     public int[] cardIds;
@@ -28,9 +29,13 @@ public class C : MonoBehaviour {
     float wait;
     public int pnum;
 
-    //challenging
+    //challenging (get from server)
+    public int inChallenge; // 0 - not in challenge, 1 - in challenge
+    public int isChallengeTurn; // 0 - is not turn, 1 - is turn
+    public int challengeType;
+    
+    //start a challenge
     public bool isChallenging;
-    public bool isBeingChallenged;
     public int playerToChallenge;
     public int cardToUseInChallenge;
 
@@ -55,6 +60,18 @@ public class C : MonoBehaviour {
                 str += playerToChallenge;
                 str += cardToUseInChallenge;
                 dcChallenge.setValue(str);
+                playerToChallenge = -1;
+                cardToUseInChallenge = -1;
+            }
+        }
+        if (isChallengeTurn == 1) {
+            if (cardToUseInChallenge != -1) {
+                var str = "";
+                str += 0;
+                str += cardToUseInChallenge;
+                dcChallenge.setValue(str);
+                playerToChallenge = -1;
+                cardToUseInChallenge = -1;
             }
         }
     }
@@ -143,6 +160,12 @@ public class C : MonoBehaviour {
             for (var i = 0; i < 4; i++) { //top stacks
                 topStacks[i] = handStr[7 + i] - 65;
             }
+            challengeType = int.Parse(handStr.Substring(11, 1));
+            isChallengeTurn = int.Parse(handStr.Substring(12, 1));
+
+            if (isChallengeTurn == 1) {
+                StartChallengeTurn();
+            }
             var isTurnLastFrame = isTurn;
             if (playerTurn == pnum) isTurn = true; else isTurn = false;
             if (!isTurnLastFrame && isTurn) { //start turn
@@ -191,8 +214,27 @@ public class C : MonoBehaviour {
         isChallenging = false;
     }
 
+    public void StartChallengeTurn() {
+        if (!challengeTurnUI.activeSelf) {
+            for (var i = 0; i < 4; i++) { //set up Challenge screen - compare slots
+                challengeTurnUI.transform.GetChild(0).GetChild(i).GetChild(2).gameObject.SetActive(true);
+                challengeTurnUI.transform.GetChild(0).GetChild(i).GetChild(0).GetComponent<Image>().sprite = data.cardSprites[cardIds[i]];
+                if (cardIds[i] == challengeType) { challengeTurnUI.transform.GetChild(0).GetChild(i).GetChild(2).gameObject.SetActive(false); }
+            }
+            challengeTurnUI.SetActive(true);
+            dcChallenge.setValue(""); //reset inputs
+            StartCoroutine(ChallengeTurn());
+        }
+    }
+
+    IEnumerator ChallengeTurn() {
+        while (true) {
+
+            yield return null;
+        }
+    }
+
     public void GotMessageConfirmation(BoolBackchannelType b) {
-        //Debug.Log("MessageConfirmation!");
         RefreshClient();
     }
 

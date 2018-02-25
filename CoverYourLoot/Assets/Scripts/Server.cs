@@ -27,6 +27,7 @@ public class Server : MonoBehaviour {
     public List<int> discardPile;
     public PlayerManager[] pm = new PlayerManager[4];
     public int playerTurn;
+    public int challengeType;
 
 	// Use this for initialization
 	void Awake () {
@@ -80,6 +81,35 @@ public class Server : MonoBehaviour {
         pm[playerTurn].StartTurn();
     }
 
+    public IEnumerator Challenge(int victim, int cardSlot, int p, int type) {
+        challengeType = type;
+        challengePanel.SetActive(true);
+        int[] P = new int[2];
+        P[0] = p;
+        P[1] = victim;
+        pm[0].inChallenge = true;
+        pm[1].inChallenge = true;
+        int round = 0;
+        int turn = 0;
+        //int cardSlotSelected = cardSlot;
+        while (true) {
+            if (pm[turn].cardToAttackWith != 0) {
+                if (pm[turn].cardToAttackWith == 5) {
+                    //player forfeited
+                }
+                //turn on card, set graphic
+                challengePanel.transform.GetChild(turn).GetChild(round).GetComponent<Image>().enabled = true;
+                challengePanel.transform.GetChild(turn).GetChild(round).GetComponent<Image>().sprite = data.cardSprites[pm[turn].cardToAttackWith];
+
+                pm[turn].cardToAttackWith = 0;
+                pm[turn].isChallengeTurn = false;
+                turn++; if (turn > 1) { turn = 0; round++; }
+                pm[turn].isChallengeTurn = true;
+            }
+            yield return null;
+        }
+    }
+
     IEnumerator UpdateHands() {
         while (true) {
             for (var i = 0; i < 4; i++) {
@@ -95,6 +125,11 @@ public class Server : MonoBehaviour {
                     if (pm[j].playerStack.Count > 1) str += data.alphabet[pm[j].playerStack[pm[j].playerStack.Count-1].type];
                     else str += "A";
                 }
+                if (pm[i].inChallenge) str += challengeType; //challengeType
+                else str += 0; //not in challenge
+                if (pm[i].inChallenge && pm[i].isChallengeTurn) str += 1; //if in challenge, and is players turn to send card
+                else str += 0;
+
 
                 //send string to client
                 bcHandStr[i].setValue(str);

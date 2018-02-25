@@ -25,6 +25,10 @@ public class PlayerManager : MonoBehaviour {
     bool discarding;
     Server c;
     public int totalWorth;
+    public int cardToAttackWith;
+    public bool inChallenge;
+    public int challengeType;
+    public bool isChallengeTurn;
 
     // Use this for initialization
     void Start () {
@@ -102,8 +106,12 @@ public class PlayerManager : MonoBehaviour {
 
     public void StartChallenge(StringBackchannelType chalStr) {
         if (chalStr != null) {
-           // Debug.Log(chalStr.STRING_VALUE);
-
+            var s = chalStr.STRING_VALUE;
+            if (s == "") return;
+            cardToAttackWith = int.Parse(s.Substring(1, 1));
+            if (!inChallenge) {
+                StartCoroutine(Server.c.Challenge(int.Parse(s.Substring(0, 1)), cardToAttackWith, p,Server.playerHand[p,cardToAttackWith]));
+            } 
         }
     }
 

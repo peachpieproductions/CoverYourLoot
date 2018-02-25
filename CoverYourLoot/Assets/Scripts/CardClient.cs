@@ -37,7 +37,13 @@ public class CardClient : MonoBehaviour {
     }
 
     public void Clicked() {
-        if (isChallengeCard) {
+        if (C.c.isChallengeTurn == 1) {
+            if (C.c.cardToUseInChallenge == -1) {
+                C.c.playerToChallenge = slot;
+                C.c.challengeTurnUI.SetActive(false);
+            }
+        }
+        else if (isChallengeCard) {
             if (C.c.playerToChallenge == -1) {
                 C.c.playerToChallenge = slot;
                 C.c.PickCardForChallenge();
