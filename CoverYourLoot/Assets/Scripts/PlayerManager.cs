@@ -124,7 +124,7 @@ public class PlayerManager : MonoBehaviour {
             var victim = int.Parse(s.Substring(0, 1));
             if (!inChallenge) {
                 StartCoroutine(Server.c.Challenge(victim, cardToAttackWith, p,Server.c.pm[victim].playerStack[Server.c.pm[victim].playerStack.Count-1].type));
-                cardToAttackWith = 0;
+                //cardToAttackWith = 0;
             } 
         }
     }

@@ -231,8 +231,8 @@ public class C : MonoBehaviour {
     }
 
     public void StartChallengeTurn() {
-        cardToUseInChallenge = -1;
         if (!challengeTurnUI.activeSelf) {
+            cardToUseInChallenge = -1;
             for (var i = 0; i < 4; i++) { //set up Challenge screen - compare slots
                 challengeTurnUI.transform.GetChild(0).GetChild(i).GetChild(1).gameObject.SetActive(true);
                 challengeTurnUI.transform.GetChild(0).GetChild(i).GetChild(0).GetComponent<Image>().sprite = data.cardSprites[cardIds[i]];
