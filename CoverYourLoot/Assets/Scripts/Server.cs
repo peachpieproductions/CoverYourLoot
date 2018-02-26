@@ -120,6 +120,8 @@ Debug.Log("victim forfeited");
 Debug.Log("attacker forfeited");
                         //animate cards going to victim
                     }
+                    pm[p].cardToAttackWith = -1;
+                    pm[victim].cardToAttackWith = -1;
                     pm[p].inChallenge = false;
                     pm[victim].inChallenge = false;
                     challengePanel.SetActive(false);

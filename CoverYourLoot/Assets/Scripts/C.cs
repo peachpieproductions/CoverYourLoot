@@ -240,15 +240,7 @@ public class C : MonoBehaviour {
             }
             challengeTurnUI.SetActive(true);
             dcChallenge.setValue(""); //reset inputs
-            StartCoroutine(ChallengeTurn());
             wait = 1f;
-        }
-    }
-
-    IEnumerator ChallengeTurn() {
-        while (true) {
-
-            yield return null;
         }
     }
 

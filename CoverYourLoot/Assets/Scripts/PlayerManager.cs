@@ -119,7 +119,7 @@ public class PlayerManager : MonoBehaviour {
     public void StartChallenge(StringBackchannelType chalStr) {
         if (chalStr != null) {
             var s = chalStr.STRING_VALUE;
-            if (s == "") return;
+            if (s == "") { cardToAttackWith = 0;  return; }
             cardToAttackWith = int.Parse(s.Substring(1, 1))+1;
             var victim = int.Parse(s.Substring(0, 1));
             if (!inChallenge) {
