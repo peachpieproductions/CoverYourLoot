@@ -51,6 +51,8 @@ public class C : MonoBehaviour {
         c = GetComponent<C>();
         playerNameText.text = playerName;
         StartCoroutine(SlowUpdate());
+        playerToChallenge = -1;
+        cardToUseInChallenge = -1;
     }
 	
 	// Update is called once per frame
@@ -254,7 +256,7 @@ public class C : MonoBehaviour {
 
     public void StartChallengeTurn() {
         if (!challengeTurnUI.activeSelf) {
-            //cardToUseInChallenge = -1;
+            cardToUseInChallenge = -1;
             for (var i = 0; i < 4; i++) { //set up Challenge screen - compare slots
                 challengeTurnUI.transform.GetChild(0).GetChild(i).GetChild(1).gameObject.SetActive(true);
                 if (cards[i].inHand) {

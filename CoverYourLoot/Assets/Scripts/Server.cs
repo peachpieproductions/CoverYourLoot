@@ -94,6 +94,8 @@ public class Server : MonoBehaviour {
 
     public IEnumerator Challenge(int victim, int cardSlot, int p, int type) {
 Debug.Log("Start Challenge _____");
+        foreach (Image img in challengePanel.transform.GetChild(0).GetComponentsInChildren<Image>()) { if (img.transform.GetSiblingIndex() > 0) img.enabled = false; }
+        foreach (Image img in challengePanel.transform.GetChild(1).GetComponentsInChildren<Image>()) { if (img.transform.GetSiblingIndex() > 0) img.enabled = false; }
         challengeType = type;
         challengePanel.SetActive(true);
         pm[p].cardToAttackWith = cardSlot;

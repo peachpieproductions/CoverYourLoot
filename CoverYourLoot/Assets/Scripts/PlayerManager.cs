@@ -120,6 +120,7 @@ public class PlayerManager : MonoBehaviour {
         if (chalStr != null) {
             var s = chalStr.STRING_VALUE;
             if (s == "") { cardToAttackWith = 0;  return; }
+            Debug.Log(s);
             cardToAttackWith = int.Parse(s.Substring(1, 1))+1;
             var victim = int.Parse(s.Substring(0, 1));
             if (!inChallenge) {
