@@ -257,8 +257,13 @@ public class C : MonoBehaviour {
             cardToUseInChallenge = -1;
             for (var i = 0; i < 4; i++) { //set up Challenge screen - compare slots
                 challengeTurnUI.transform.GetChild(0).GetChild(i).GetChild(1).gameObject.SetActive(true);
-                challengeTurnUI.transform.GetChild(0).GetChild(i).GetChild(0).GetComponent<Image>().sprite = data.cardSprites[cardIds[i]];
-                if (cardIds[i] == challengeType || cardIds[i] == 1 || cardIds[i] == 2) { challengeTurnUI.transform.GetChild(0).GetChild(i).GetChild(1).gameObject.SetActive(false); }
+                if (cards[i].inHand) {
+                    challengeTurnUI.transform.GetChild(0).GetChild(i).GetChild(0).GetComponent<Image>().enabled = true;
+                    challengeTurnUI.transform.GetChild(0).GetChild(i).GetChild(0).GetComponent<Image>().sprite = data.cardSprites[cardIds[i]];
+                    if (cardIds[i] == challengeType || cardIds[i] == 1 || cardIds[i] == 2) { challengeTurnUI.transform.GetChild(0).GetChild(i).GetChild(1).gameObject.SetActive(false); }
+                } else {
+                    challengeTurnUI.transform.GetChild(0).GetChild(i).GetChild(0).GetComponent<Image>().enabled = false;
+                }
             }
             challengeTurnUI.SetActive(true);
             dcChallenge.setValue(""); //reset inputs
