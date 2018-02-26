@@ -5,6 +5,7 @@ using EasyWiFi.ServerBackchannels;
 using EasyWiFi.ServerControls;
 using EasyWiFi.Core;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Server : MonoBehaviour {
 
@@ -44,6 +45,9 @@ public class Server : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
+        if (Input.GetKeyDown(KeyCode.Backspace)) { //Restart game
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
         if (Input.GetKeyDown(KeyCode.N)) { NextTurn(); } 
 	}
 

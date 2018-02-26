@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using EasyWiFi.Core;
 using EasyWiFi.ClientControls;
+using UnityEngine.SceneManagement;
 
 public class C : MonoBehaviour {
 
@@ -53,6 +54,9 @@ public class C : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (Input.GetKeyDown(KeyCode.Backspace)) {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
         if (isChallenging) {
             if (playerToChallenge != -1 && cardToUseInChallenge != -1) {
                 var str = "";
