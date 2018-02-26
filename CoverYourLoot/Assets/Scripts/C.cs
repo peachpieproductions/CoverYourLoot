@@ -29,6 +29,7 @@ public class C : MonoBehaviour {
     public bool canMatchWithDiscard;
     public float wait;
     public int pnum;
+    public bool gaveUp;
 
     //challenging (get from server)
     public int isChallengeTurn; // 0 - is not turn, 1 - is turn

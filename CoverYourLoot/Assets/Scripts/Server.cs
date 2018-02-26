@@ -70,10 +70,13 @@ public class Server : MonoBehaviour {
         for (i = 0; i < 4; i++) { deck.Add(1); } //Huge Sack x 4 - 50,000
         for (i = 0; i < 8; i++) { deck.Add(2); } //Big Gold Sack x 8 - 25,000
         for (i = 0; i < 8; i++) { deck.Add(3); } //Diamond x 8 - 20,000
-        for (var j = 4; j < 13; j++) {
+
+        for (i = 0; i < 90; i++) { deck.Add(3); } //DELETE _ FOR TESTING
+
+        /*for (var j = 4; j < 13; j++) {
             for (i = 0; i < 10; i++) { deck.Add(j); } //Other Cards x 10
-        }
-        
+        }*/
+
         //shuffle
         for (i = 0; i < deck.Count; i++) {
             int temp = deck[i];
