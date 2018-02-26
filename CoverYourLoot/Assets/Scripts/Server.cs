@@ -63,9 +63,9 @@ public class Server : MonoBehaviour {
     }
 
     public void BuildDeck() {
-        var i = 0;
-        for (i = 0; i < 110; i++) { deck.Add(Random.Range(1,3)); } //Huge Sack x 4 - 50,000
-        /*
+        /*var i = 0;
+        for (i = 0; i < 110; i++) { deck.Add(Random.Range(1,3)); } */
+        
         var i = 0;
         for (i = 0; i < 4; i++) { deck.Add(1); } //Huge Sack x 4 - 50,000
         for (i = 0; i < 8; i++) { deck.Add(2); } //Big Gold Sack x 8 - 25,000
@@ -73,7 +73,7 @@ public class Server : MonoBehaviour {
         for (var j = 4; j < 13; j++) {
             for (i = 0; i < 10; i++) { deck.Add(j); } //Other Cards x 10
         }
-        */
+        
         //shuffle
         for (i = 0; i < deck.Count; i++) {
             int temp = deck[i];

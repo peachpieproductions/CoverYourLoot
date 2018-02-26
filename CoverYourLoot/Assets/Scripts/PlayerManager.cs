@@ -121,10 +121,8 @@ public class PlayerManager : MonoBehaviour {
             var s = chalStr.STRING_VALUE;
             if (s == "") { cardToAttackWith = 0;  return; }
             cardToAttackWith = int.Parse(s.Substring(1, 1))+1;
-Debug.Log("start challenge - cardToAttackWith: "+cardToAttackWith);
             var victim = int.Parse(s.Substring(0, 1));
             if (!inChallenge) {
-Debug.Log("Challenge Coroutine Started");
                 StartCoroutine(Server.c.Challenge(victim, cardToAttackWith, p,Server.c.pm[victim].playerStack[Server.c.pm[victim].playerStack.Count-1].type));
                 //cardToAttackWith = 0;
             } 

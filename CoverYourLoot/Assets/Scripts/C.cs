@@ -57,6 +57,11 @@ public class C : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Backspace)) {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
+        if (challengeTurnUI.activeSelf) {
+            if (isChallengeTurn == 0) {
+                challengeTurnUI.SetActive(false);
+            }
+        }
         if (isChallenging) {
             if (playerToChallenge != -1 && cardToUseInChallenge != -1) {
                 var str = "";
@@ -82,6 +87,22 @@ public class C : MonoBehaviour {
                 cardToUseInChallenge = -1;
             }
         }
+    }
+
+    void OnGUI() {
+        int i = 0;
+        GUI.Label(new Rect(10, 10 + i * 15, 500, 20), "Pnum: " + pnum); i++;
+        GUI.Label(new Rect(10, 10 + i * 15, 500, 20), "isChallengeTurn: " + isChallengeTurn); i++;
+        GUI.Label(new Rect(10, 10 + i * 15, 500, 20), "challengeType: " + challengeType); i++;
+        GUI.Label(new Rect(10, 10 + i * 15, 500, 20), "isChallenging: " + isChallenging); i++;
+        GUI.Label(new Rect(10, 10 + i * 15, 500, 20), "playerToChallenge: " + playerToChallenge); i++;
+        GUI.Label(new Rect(10, 10 + i * 15, 500, 20), "cardToUseInChallenge: " + cardToUseInChallenge); i++;
+        GUI.Label(new Rect(10, 10 + i * 15, 500, 20), "wait: " + wait); i++;
+        GUI.Label(new Rect(10, 10 + i * 15, 500, 20), "discarding: " + discarding); i++;
+        GUI.Label(new Rect(10, 10 + i * 15, 500, 20), "cardid1: " + cardIds[0]); i++;
+        GUI.Label(new Rect(10, 10 + i * 15, 500, 20), "cardid2: " + cardIds[1]); i++;
+        GUI.Label(new Rect(10, 10 + i * 15, 500, 20), "cardid3: " + cardIds[2]); i++;
+        GUI.Label(new Rect(10, 10 + i * 15, 500, 20), "cardid4: " + cardIds[3]); i++;
     }
 
     public void EnableDiscarding() {
