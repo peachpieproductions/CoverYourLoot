@@ -45,6 +45,14 @@ public class Server : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
+        if (Input.GetKeyDown(KeyCode.Space)) { //TEST DELETE _____________________________________
+            playerHand[0, 0] = 5;
+            playerHand[0, 1] = 5;
+            playerHand[0, 2] = 5;
+            playerHand[1, 0] = 5;
+            playerHand[1, 1] = 5;
+            playerHand[1, 2] = 5;
+        }
         if (Input.GetKeyDown(KeyCode.Backspace)) { //Restart game
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }

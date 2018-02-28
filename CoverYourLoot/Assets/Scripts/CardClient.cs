@@ -74,6 +74,7 @@ public class CardClient : MonoBehaviour {
         StartMoveToPosition(startPos + Vector3.up * 500);
         inHand = false;
         selected = false;
+        C.c.wait = 1f;
     }
 
 
