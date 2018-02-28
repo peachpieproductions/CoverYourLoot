@@ -194,7 +194,7 @@ public class C : MonoBehaviour {
             for (var i = 0; i < 4; i++) { //top stacks
                 topStacks[i] = handStr[7 + i] - 65;
             }
-            challengeType = int.Parse(handStr.Substring(11, 1));
+            challengeType = handStr[11] - 65;
             isChallengeTurn = int.Parse(handStr.Substring(12, 1));
 
             if (isChallengeTurn == 1 && wait == 0) {

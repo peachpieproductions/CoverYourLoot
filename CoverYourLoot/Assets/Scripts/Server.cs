@@ -173,8 +173,8 @@ Debug.Log("attacker forfeited");
                     if (pm[j].playerStack.Count > 1) str += data.alphabet[pm[j].playerStack[pm[j].playerStack.Count-1].type];
                     else str += "A";
                 }
-                if (pm[i].inChallenge) str += challengeType; //challengeType
-                else str += 0; //not in challenge
+                if (pm[i].inChallenge) str += data.alphabet[challengeType]; //challengeType
+                else str += "A"; //not in challenge
                 if (pm[i].inChallenge && pm[i].isChallengeTurn) str += 1; //if in challenge, and is players turn to send card
                 else str += 0;
 
