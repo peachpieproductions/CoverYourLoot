@@ -49,9 +49,20 @@ public class Server : MonoBehaviour {
             playerHand[0, 0] = 5;
             playerHand[0, 1] = 5;
             playerHand[0, 2] = 5;
+            playerHand[0, 3] = 5;
             playerHand[1, 0] = 5;
             playerHand[1, 1] = 5;
             playerHand[1, 2] = 5;
+            playerHand[1, 3] = 5;
+            for (var i = 0; i < 4; i++) {
+                Stack newStack = new Stack();
+                newStack.count = 2;
+                newStack.type = 5;
+                pm[0].playerStack.Add(newStack);
+                pm[1].playerStack.Add(newStack);
+                pm[0].UpdateStackVisual();
+                pm[1].UpdateStackVisual();
+            }
         }
         if (Input.GetKeyDown(KeyCode.Backspace)) { //Restart game
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);

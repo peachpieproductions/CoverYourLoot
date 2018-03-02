@@ -85,7 +85,7 @@ MonoBehaviour:
   control: challenge
   player: 0
   notifyMethod: StartChallenge
-  callType: 1
+  callType: 0
 --- !u!114 &114250060385896606
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -103,6 +103,10 @@ MonoBehaviour:
   p: 0
   bcMessageConfirmation: {fileID: 114189598748288622}
   totalWorth: 0
+  cardToAttackWith: 0
+  inChallenge: 0
+  challengeType: 0
+  isChallengeTurn: 0
 --- !u!114 &114517275437999150
 MonoBehaviour:
   m_ObjectHideFlags: 1
