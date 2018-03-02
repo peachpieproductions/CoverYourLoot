@@ -120,10 +120,10 @@ public class PlayerManager : MonoBehaviour {
     public void StartChallenge(IntBackchannelType newInt) {
         if (newInt != null) {
             var i = newInt.INT_VALUE;
-            if (i == -1) return;
+            if (i < 1) return;
             Debug.Log(i);
             var victim = int.Parse(i.ToString()[0].ToString())-1;
-            var cardToAttackWith = int.Parse(i.ToString()[1].ToString());
+            var cardToAttackWith = int.Parse(i.ToString()[1].ToString()) + 1;
             
             if (!inChallenge) {
                 StartCoroutine(Server.c.Challenge(victim, cardToAttackWith, p, Server.c.pm[victim].playerStack[Server.c.pm[victim].playerStack.Count - 1].type));

@@ -41,7 +41,7 @@ public class CardClient : MonoBehaviour {
             if (C.c.cardToUseInChallenge == -1) {
                 C.c.cardToUseInChallenge = slot;
                 C.c.challengeTurnUI.SetActive(false);
-                C.c.wait = 1f;
+                //C.c.wait = 1f;
             }
         }
         else if (isChallengeCard) {
