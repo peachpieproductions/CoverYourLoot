@@ -74,7 +74,7 @@ public class C : MonoBehaviour {
         if (isChallenging) {
             if (playerToChallenge != -1 && cardToUseInChallenge != -1) {
                 int newInt = 0;
-                newInt += playerToChallenge * 10;
+                newInt += (playerToChallenge + 1) * 10;
                 newInt += cardToUseInChallenge;
                 dcStartChall.setValue(newInt);
                 challengeType = cardIds[cardToUseInChallenge];

@@ -122,7 +122,7 @@ public class PlayerManager : MonoBehaviour {
             var i = newInt.INT_VALUE;
             if (i == -1) return;
             Debug.Log(i);
-            var victim = int.Parse(i.ToString()[0].ToString());
+            var victim = int.Parse(i.ToString()[0].ToString())-1;
             var cardToAttackWith = int.Parse(i.ToString()[1].ToString());
             
             if (!inChallenge) {
