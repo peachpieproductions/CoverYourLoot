@@ -122,7 +122,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   control: BoolData1
   player: 0
-  notifyMethod: yourMethod
+  notifyMethod: GiveUpChallenge
   callType: 1
 --- !u!114 &114517275437999150
 MonoBehaviour:
