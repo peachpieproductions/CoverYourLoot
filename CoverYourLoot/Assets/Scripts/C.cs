@@ -46,7 +46,7 @@ public class C : MonoBehaviour {
     public StringDataClientController dcChallenge;
     public IntDataClientController dcDiscardCard;
     public IntDataClientController dcCardToChallenge;
-    public IntDataClientController dcGiveUp;
+    public BoolDataClientController dcGiveUp;
 
     // Use this for initialization
     void Start () {
@@ -57,7 +57,7 @@ public class C : MonoBehaviour {
         playerToChallenge = -1;
         cardToUseInChallenge = -1;
         dcCardToChallenge.setValue(-1);
-        dcGiveUp.setValue(0);
+        dcGiveUp.setValue(false);
     }
 	
 	// Update is called once per frame
@@ -203,7 +203,7 @@ public class C : MonoBehaviour {
             isChallengeTurn = int.Parse(handStr.Substring(12, 1));
             if (isChallengeTurn == 1 && wasChallengeTurn == 0) {
                 dcCardToChallenge.setValue(-1);
-                dcGiveUp.setValue(0);
+                dcGiveUp.setValue(false);
             } wasChallengeTurn = isChallengeTurn;
 
             if (isChallengeTurn == 1 && wait == 0) {
@@ -259,7 +259,7 @@ public class C : MonoBehaviour {
 
     public void GiveUpChallenge() {
         challengeTurnUI.SetActive(false);
-        dcGiveUp.setValue(1);
+        dcGiveUp.setValue(true);
         wait = 1f;
     }
 
@@ -298,7 +298,7 @@ public class C : MonoBehaviour {
         cardsSelected.Clear();
         dcDiscardCard.setValue(0);
         dcCardToChallenge.setValue(-1);
-        dcGiveUp.setValue(0);
+        dcGiveUp.setValue(false);
         dcNewPair.setValue("0000");
     }
 }

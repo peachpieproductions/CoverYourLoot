@@ -2662,6 +2662,7 @@ MonoBehaviour:
   wait: 0
   pnum: 0
   gaveUp: 0
+  wasChallengeTurn: 0
   isChallengeTurn: 0
   challengeType: 0
   isChallenging: 0
@@ -2757,10 +2758,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1087128978}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1082cb1f9fb2ce145b20bb5f401ce8cb, type: 3}
+  m_Script: {fileID: 11500000, guid: 6c3f8e878e15e3a4ba358a8ebdf1c5dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controlName: giveup
+  controlName: BoolData1
 --- !u!114 &1087128987
 MonoBehaviour:
   m_ObjectHideFlags: 0

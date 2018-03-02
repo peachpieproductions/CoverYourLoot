@@ -134,21 +134,23 @@ public class PlayerManager : MonoBehaviour {
     public void CardToChallenge(IntBackchannelType slot) {
         if (slot != null) {
             if (prevCardVal != slot.INT_VALUE) {
+                Debug.Log("cardtoChallenge" + slot.INT_VALUE);
                 cardToAttackWith = slot.INT_VALUE + 1;
             }
             prevCardVal = slot.INT_VALUE;
         }
     }
 
-    int prevGiveUpVal;
-    public void GiveUpChallenge(IntBackchannelType gaveUp) {
+    bool prevGiveUpVal;
+    public void GiveUpChallenge(BoolBackchannelType gaveUp) {
         if (gaveUp != null) {
-            if (prevGiveUpVal != gaveUp.INT_VALUE) {
-                if (gaveUp.INT_VALUE == 1) {
+            if (prevGiveUpVal != gaveUp.BOOL_VALUE) {
+                Debug.Log("GaveUp" + gaveUp.BOOL_VALUE);
+                if (gaveUp.BOOL_VALUE) {
                     cardToAttackWith = 5;
                 }
             }
-            prevGiveUpVal = gaveUp.INT_VALUE;
+            prevGiveUpVal = gaveUp.BOOL_VALUE;
         }
     }
 
