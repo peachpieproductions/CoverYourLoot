@@ -24,7 +24,6 @@ public class Server : MonoBehaviour {
     public Transform[] playerTargetPos = new Transform[4];
     public Text[] playerNames = new Text[4];
     public Text[] playerWorth = new Text[4];
-    public StringServerBackchannel[] bcHandStr = new StringServerBackchannel[4];
     public List<int> deck;
     public List<int> discardPile;
     public PlayerManager[] pm = new PlayerManager[4];
@@ -77,7 +76,7 @@ public class Server : MonoBehaviour {
 
         //Set up Player Managers 
         for (var i = 0; i < 4; i++) {
-            bcHandStr[i] = pm[i].GetComponent<StringServerBackchannel>();
+            
         }
     }
 
@@ -199,7 +198,7 @@ Debug.Log("attacker forfeited");
 
 
                 //send string to client
-                bcHandStr[i].setValue(str);
+                pm[i].bcHandString.setValue(str);
             }
             yield return new WaitForSeconds(.15f);
         }

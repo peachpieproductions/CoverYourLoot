@@ -32,6 +32,7 @@ public class C : MonoBehaviour {
     public bool gaveUp;
 
     //challenging (get from server)
+    public int wasChallengeTurn; // 0 - is not turn, 1 - is turn
     public int isChallengeTurn; // 0 - is not turn, 1 - is turn
     public int challengeType;
     
@@ -44,19 +45,24 @@ public class C : MonoBehaviour {
     public StringDataClientController dcNewPair;
     public StringDataClientController dcChallenge;
     public IntDataClientController dcDiscardCard;
+    public IntDataClientController dcCardToChallenge;
+    public IntDataClientController dcGiveUp;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         Application.targetFrameRate = 60;
         c = GetComponent<C>();
         playerNameText.text = playerName;
         StartCoroutine(SlowUpdate());
         playerToChallenge = -1;
         cardToUseInChallenge = -1;
+        dcCardToChallenge.setValue(-1);
+        dcGiveUp.setValue(0);
     }
 	
 	// Update is called once per frame
 	void Update () {
+        if (wait > 0) return;
         if (Input.GetKeyDown(KeyCode.Backspace)) {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
@@ -81,11 +87,8 @@ public class C : MonoBehaviour {
         }
         if (isChallengeTurn == 1) {
             if (cardToUseInChallenge != -1) {
-                var str = "";
-                str += 0;
-                str += cardToUseInChallenge;
-                dcChallenge.setValue(str);
-                if (cardToUseInChallenge < 4) cards[cardToUseInChallenge].TakeCard();
+                dcCardToChallenge.setValue(cardToUseInChallenge);
+                cards[cardToUseInChallenge].TakeCard();
                 playerToChallenge = -1;
                 cardToUseInChallenge = -1;
             }
@@ -182,6 +185,7 @@ public class C : MonoBehaviour {
     }
 
     public void HandUpdated(StringBackchannelType str) {
+        if (wait > 0) return;
         if (str.STRING_VALUE != null) {
             //Debug.Log(str.STRING_VALUE);
             string handStr = str.STRING_VALUE;
@@ -195,7 +199,12 @@ public class C : MonoBehaviour {
                 topStacks[i] = handStr[7 + i] - 65;
             }
             challengeType = handStr[11] - 65;
+            wasChallengeTurn = isChallengeTurn;
             isChallengeTurn = int.Parse(handStr.Substring(12, 1));
+            if (isChallengeTurn == 1 && wasChallengeTurn == 0) {
+                dcCardToChallenge.setValue(-1);
+                dcGiveUp.setValue(0);
+            } wasChallengeTurn = isChallengeTurn;
 
             if (isChallengeTurn == 1 && wait == 0) {
                 StartChallengeTurn();
@@ -250,7 +259,7 @@ public class C : MonoBehaviour {
 
     public void GiveUpChallenge() {
         challengeTurnUI.SetActive(false);
-        cardToUseInChallenge = 4;
+        dcGiveUp.setValue(1);
         wait = 1f;
     }
 
@@ -288,6 +297,8 @@ public class C : MonoBehaviour {
         discarding = false;
         cardsSelected.Clear();
         dcDiscardCard.setValue(0);
+        dcCardToChallenge.setValue(-1);
+        dcGiveUp.setValue(0);
         dcNewPair.setValue("0000");
     }
 }

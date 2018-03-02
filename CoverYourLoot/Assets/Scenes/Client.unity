@@ -2617,6 +2617,8 @@ GameObject:
   - component: {fileID: 1087128983}
   - component: {fileID: 1087128984}
   - component: {fileID: 1087128985}
+  - component: {fileID: 1087128987}
+  - component: {fileID: 1087128986}
   m_Layer: 0
   m_Name: C
   m_TagString: Untagged
@@ -2659,6 +2661,7 @@ MonoBehaviour:
   canMatchWithDiscard: 0
   wait: 0
   pnum: 0
+  gaveUp: 0
   isChallengeTurn: 0
   challengeType: 0
   isChallenging: 0
@@ -2667,6 +2670,8 @@ MonoBehaviour:
   dcNewPair: {fileID: 1087128983}
   dcChallenge: {fileID: 1087128985}
   dcDiscardCard: {fileID: 1087128982}
+  dcCardToChallenge: {fileID: 1087128987}
+  dcGiveUp: {fileID: 1087128986}
 --- !u!4 &1087128980
 Transform:
   m_ObjectHideFlags: 0
@@ -2743,7 +2748,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdedeefef4b55b341b178fbaa5757321, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controlName: challenge
+  controlName: startchallenge
+--- !u!114 &1087128986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1087128978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1082cb1f9fb2ce145b20bb5f401ce8cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controlName: giveup
+--- !u!114 &1087128987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1087128978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1082cb1f9fb2ce145b20bb5f401ce8cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controlName: cardtochall
 --- !u!1001 &1088192329
 Prefab:
   m_ObjectHideFlags: 0

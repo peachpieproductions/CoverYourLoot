@@ -25,6 +25,8 @@ GameObject:
   - component: {fileID: 114517275437999150}
   - component: {fileID: 114189598748288622}
   - component: {fileID: 114238564195077448}
+  - component: {fileID: 114957962202215630}
+  - component: {fileID: 114800638884074502}
   m_Layer: 0
   m_Name: PlayerManager1
   m_TagString: Untagged
@@ -82,10 +84,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6f8983642bb1474398547180940a989, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  control: challenge
+  control: startchallenge
   player: 0
   notifyMethod: StartChallenge
-  callType: 0
+  callType: 1
 --- !u!114 &114250060385896606
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -102,6 +104,7 @@ MonoBehaviour:
   playerStack: []
   p: 0
   bcMessageConfirmation: {fileID: 114189598748288622}
+  bcHandString: {fileID: 114213395360304336}
   totalWorth: 0
   cardToAttackWith: 0
   inChallenge: 0
@@ -122,6 +125,20 @@ MonoBehaviour:
   player: 0
   notifyMethod: CreatePair
   callType: 1
+--- !u!114 &114800638884074502
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1481288627436584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28ef3efd5bd70d948ba3b60ee3f03055, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  control: giveup
+  player: 0
+  notifyMethod: GiveUpChallenge
 --- !u!114 &114849766300784182
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -136,3 +153,17 @@ MonoBehaviour:
   control: discard
   player: 0
   notifyMethod: DiscardCard
+--- !u!114 &114957962202215630
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1481288627436584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28ef3efd5bd70d948ba3b60ee3f03055, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  control: cardtochall
+  player: 0
+  notifyMethod: CardToChallenge

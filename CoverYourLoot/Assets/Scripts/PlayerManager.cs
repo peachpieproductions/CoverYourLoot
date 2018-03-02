@@ -22,6 +22,7 @@ public class PlayerManager : MonoBehaviour {
     public List<Stack> playerStack = new List<Stack>();
     public int p;
     public BoolServerBackchannel bcMessageConfirmation;
+    public StringServerBackchannel bcHandString;
     bool discarding;
     Server c;
     public int totalWorth;
@@ -31,16 +32,16 @@ public class PlayerManager : MonoBehaviour {
     public bool isChallengeTurn;
 
     // Use this for initialization
-    void Start () {
+    void Start() {
         c = Server.c;
         if (AI) StartCoroutine(AICor());
         StartCoroutine(TotalUpWorth());
     }
-	
-	// Update is called once per frame
-	void Update () {
 
-	}
+    // Update is called once per frame
+    void Update() {
+
+    }
 
     IEnumerator AICor() {
         c.playerNames[p].text = "AI";
@@ -49,7 +50,7 @@ public class PlayerManager : MonoBehaviour {
             if (isChallengeTurn) {
                 yield return new WaitForSeconds(Random.Range(4f, 7f));
                 for (var i = 0; i < 4; i++) {
-                    if (Server.playerHand[p,i] == Server.c.challengeType || Server.playerHand[p, i] == 1 || Server.playerHand[p, i] == 2) {
+                    if (Server.playerHand[p, i] == Server.c.challengeType || Server.playerHand[p, i] == 1 || Server.playerHand[p, i] == 2) {
                         cardToAttackWith = i + 1;
                         break;
                     }
@@ -58,7 +59,7 @@ public class PlayerManager : MonoBehaviour {
                 }
             }
             if (c.playerTurn == p && !AIDone) {
-                if (Server.c.AIWaitTime) yield return new WaitForSeconds(Random.Range(2.5f,4f));
+                if (Server.c.AIWaitTime) yield return new WaitForSeconds(Random.Range(2.5f, 4f));
                 else yield return new WaitForSeconds(.15f);
                 //Try to make a pair
                 Vector2 pair = new Vector2(0, 0);
@@ -82,9 +83,9 @@ public class PlayerManager : MonoBehaviour {
     }
 
     IEnumerator TotalUpWorth() {
-         while (true) {
+        while (true) {
             totalWorth = 0;
-            foreach(Stack s in playerStack) {
+            foreach (Stack s in playerStack) {
                 totalWorth += s.count * c.data.worth[s.type];
                 totalWorth += s.gold * 50000;
                 totalWorth += s.silver * 25000;
@@ -110,7 +111,7 @@ public class PlayerManager : MonoBehaviour {
             yield return null;
         }
         c.AddToDiscard(Server.playerHand[p, i - 1]);
-        DrawCard(i - 1,.4f);
+        DrawCard(i - 1, .4f);
         StartSendMessageConfirmation();
         c.NextTurn();
         discarding = false;
@@ -121,11 +122,29 @@ public class PlayerManager : MonoBehaviour {
             var s = chalStr.STRING_VALUE;
             if (s == "" || s == null) { /*cardToAttackWith = 0;*/  return; }
             Debug.Log(s);
-            cardToAttackWith = int.Parse(s.Substring(1, 1))+1;
+            cardToAttackWith = int.Parse(s.Substring(1, 1)) + 1;
             var victim = int.Parse(s.Substring(0, 1));
             if (!inChallenge) {
-                StartCoroutine(Server.c.Challenge(victim, cardToAttackWith, p,Server.c.pm[victim].playerStack[Server.c.pm[victim].playerStack.Count-1].type));
-            } 
+                StartCoroutine(Server.c.Challenge(victim, cardToAttackWith, p, Server.c.pm[victim].playerStack[Server.c.pm[victim].playerStack.Count - 1].type));
+            }
+        }
+    }
+
+    public void CardToChallenge(IntBackchannelType slot) {
+        if (slot != null) {
+            Debug.Log("CardToChallenge - " + slot.INT_VALUE);
+            if (slot.INT_VALUE < 0) {
+                cardToAttackWith = slot.INT_VALUE;
+            }
+        }
+    }
+
+    public void GiveUpChallenge(IntBackchannelType gaveUp) {
+        if (gaveUp != null) {
+            Debug.Log("Gaveup - " + gaveUp.INT_VALUE);
+            if (gaveUp.INT_VALUE == 1) {
+                cardToAttackWith = 5;
+            }
         }
     }
 
