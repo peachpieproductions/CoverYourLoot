@@ -125,7 +125,7 @@ Debug.Log("attacker: " + p);
         int turn = 0;
         //int cardSlotSelected = cardSlot;
         while (true) {
-            if (pm[P[turn]].cardToAttackWith != 0) {
+            if (pm[P[turn]].cardToAttackWith > 0) {
 Debug.Log("P" + P[turn] + " used slot " + pm[P[turn]].cardToAttackWith);
                 if (pm[P[turn]].cardToAttackWith == 5) { //forfeit
                     if (P[turn] == victim) { //victim forfeited

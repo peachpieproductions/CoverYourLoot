@@ -120,8 +120,8 @@ public class PlayerManager : MonoBehaviour {
     public void StartChallenge(StringBackchannelType chalStr) {
         if (chalStr != null) {
             var s = chalStr.STRING_VALUE;
-            if (s == "" || s == null) { /*cardToAttackWith = 0;*/  return; }
             Debug.Log(s);
+            if (s == "" || s == null || s.Length > 2) { /*cardToAttackWith = 0;*/  return; }
             cardToAttackWith = int.Parse(s.Substring(1, 1)) + 1;
             var victim = int.Parse(s.Substring(0, 1));
             if (!inChallenge) {
@@ -130,21 +130,25 @@ public class PlayerManager : MonoBehaviour {
         }
     }
 
+    int prevCardVal;
     public void CardToChallenge(IntBackchannelType slot) {
         if (slot != null) {
-            Debug.Log("CardToChallenge - " + slot.INT_VALUE);
-            if (slot.INT_VALUE < 0) {
-                cardToAttackWith = slot.INT_VALUE;
+            if (prevCardVal != slot.INT_VALUE) {
+                cardToAttackWith = slot.INT_VALUE + 1;
             }
+            prevCardVal = slot.INT_VALUE;
         }
     }
 
+    int prevGiveUpVal;
     public void GiveUpChallenge(IntBackchannelType gaveUp) {
         if (gaveUp != null) {
-            Debug.Log("Gaveup - " + gaveUp.INT_VALUE);
-            if (gaveUp.INT_VALUE == 1) {
-                cardToAttackWith = 5;
+            if (prevGiveUpVal != gaveUp.INT_VALUE) {
+                if (gaveUp.INT_VALUE == 1) {
+                    cardToAttackWith = 5;
+                }
             }
+            prevGiveUpVal = gaveUp.INT_VALUE;
         }
     }
 

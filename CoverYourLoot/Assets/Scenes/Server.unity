@@ -1583,6 +1583,17 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 632450337}
+--- !u!1 &642543231 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1481288627436584, guid: 19a49c9b1e443a2408bda301b4f6650e,
+    type: 2}
+  m_PrefabInternal: {fileID: 442191701}
+--- !u!114 &642543239 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114250060385896606, guid: 19a49c9b1e443a2408bda301b4f6650e,
+    type: 2}
+  m_PrefabInternal: {fileID: 442191701}
+  m_Script: {fileID: 11500000, guid: 075a0578fa42701469e373b048e62fc5, type: 3}
 --- !u!1 &676025376
 GameObject:
   m_ObjectHideFlags: 0
@@ -2279,6 +2290,17 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 790063a0531937f48b7b09d2d206de08, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1010186020 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1481288627436584, guid: 19a49c9b1e443a2408bda301b4f6650e,
+    type: 2}
+  m_PrefabInternal: {fileID: 1189577428}
+--- !u!114 &1010186028 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114250060385896606, guid: 19a49c9b1e443a2408bda301b4f6650e,
+    type: 2}
+  m_PrefabInternal: {fileID: 1189577428}
+  m_Script: {fileID: 11500000, guid: 075a0578fa42701469e373b048e62fc5, type: 3}
 --- !u!1 &1047717337
 GameObject:
   m_ObjectHideFlags: 0
@@ -4668,6 +4690,17 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1843701533}
+--- !u!1 &1846672816 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1481288627436584, guid: 19a49c9b1e443a2408bda301b4f6650e,
+    type: 2}
+  m_PrefabInternal: {fileID: 1143567343}
+--- !u!114 &1846672824 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114250060385896606, guid: 19a49c9b1e443a2408bda301b4f6650e,
+    type: 2}
+  m_PrefabInternal: {fileID: 1143567343}
+  m_Script: {fileID: 11500000, guid: 075a0578fa42701469e373b048e62fc5, type: 3}
 --- !u!1 &1857836282
 GameObject:
   m_ObjectHideFlags: 0
@@ -5717,9 +5750,9 @@ MonoBehaviour:
   challengePanel: {fileID: 1857836282}
   playerManagers:
   - {fileID: 1382026210}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 1010186020}
+  - {fileID: 642543231}
+  - {fileID: 1846672816}
   playerPanels:
   - {fileID: 1336538492}
   - {fileID: 2050670304}
@@ -5744,9 +5777,9 @@ MonoBehaviour:
   discardPile: 
   pm:
   - {fileID: 1382026213}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 1010186028}
+  - {fileID: 642543239}
+  - {fileID: 1846672824}
   playerTurn: 0
   challengeType: 0
 --- !u!4 &2112497708
