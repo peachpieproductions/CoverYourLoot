@@ -43,7 +43,7 @@ public class C : MonoBehaviour {
 
     //bc and data
     public StringDataClientController dcNewPair;
-    public StringDataClientController dcChallenge;
+    public IntDataClientController dcStartChall;
     public IntDataClientController dcDiscardCard;
     public IntDataClientController dcCardToChallenge;
     public BoolDataClientController dcGiveUp;
@@ -73,10 +73,10 @@ public class C : MonoBehaviour {
         }
         if (isChallenging) {
             if (playerToChallenge != -1 && cardToUseInChallenge != -1) {
-                var str = "";
-                str += playerToChallenge;
-                str += cardToUseInChallenge;
-                dcChallenge.setValue(str);
+                int newInt = 0;
+                newInt += playerToChallenge * 10;
+                newInt += cardToUseInChallenge;
+                dcStartChall.setValue(newInt);
                 challengeType = cardIds[cardToUseInChallenge];
                 cards[cardToUseInChallenge].TakeCard();
                 playerToChallenge = -1;
@@ -84,6 +84,8 @@ public class C : MonoBehaviour {
                 isChallenging = false;
                 wait = 1f;
             }
+        } else {
+            dcStartChall.setValue(-1);
         }
         if (isChallengeTurn == 1) {
             if (cardToUseInChallenge != -1) {
@@ -224,6 +226,7 @@ public class C : MonoBehaviour {
         challengeUI.transform.Find("ChallengeText").GetComponent<Text>().text = "Who Do You Want to Challenge?";
         playerToChallenge = -1;
         cardToUseInChallenge = -1;
+        dcStartChall.setValue(-1);
         for (var i = 0; i < 4; i++) { //set up Challenge screen - compare slots
             topStacksTran.GetChild(i).GetChild(2).gameObject.SetActive(true);
             for (var j = 0; j < 4; j++) { //my hand = j
@@ -277,7 +280,7 @@ public class C : MonoBehaviour {
                 }
             }
             challengeTurnUI.SetActive(true);
-            dcChallenge.setValue(""); //reset inputs
+            dcCardToChallenge.setValue(-1);
             wait = 1f;
         }
     }
@@ -298,6 +301,7 @@ public class C : MonoBehaviour {
         cardsSelected.Clear();
         dcDiscardCard.setValue(0);
         dcCardToChallenge.setValue(-1);
+        dcStartChall.setValue(-1);
         dcGiveUp.setValue(false);
         dcNewPair.setValue("0000");
     }

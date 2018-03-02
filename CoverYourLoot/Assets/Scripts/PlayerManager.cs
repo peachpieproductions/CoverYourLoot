@@ -117,13 +117,14 @@ public class PlayerManager : MonoBehaviour {
         discarding = false;
     }
 
-    public void StartChallenge(StringBackchannelType chalStr) {
-        if (chalStr != null) {
-            var s = chalStr.STRING_VALUE;
-            Debug.Log(s);
-            if (s == "" || s == null || s.Length > 2) { /*cardToAttackWith = 0;*/  return; }
-            cardToAttackWith = int.Parse(s.Substring(1, 1)) + 1;
-            var victim = int.Parse(s.Substring(0, 1));
+    public void StartChallenge(IntBackchannelType newInt) {
+        if (newInt != null) {
+            var i = newInt.INT_VALUE;
+            if (i == -1) return;
+            Debug.Log(i);
+            var victim = int.Parse(i.ToString()[0].ToString());
+            var cardToAttackWith = int.Parse(i.ToString()[1].ToString());
+            
             if (!inChallenge) {
                 StartCoroutine(Server.c.Challenge(victim, cardToAttackWith, p, Server.c.pm[victim].playerStack[Server.c.pm[victim].playerStack.Count - 1].type));
             }
