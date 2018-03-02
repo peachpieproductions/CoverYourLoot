@@ -2669,7 +2669,7 @@ MonoBehaviour:
   playerToChallenge: 0
   cardToUseInChallenge: 0
   dcNewPair: {fileID: 1087128983}
-  dcChallenge: {fileID: 0}
+  dcStartChall: {fileID: 1087128985}
   dcDiscardCard: {fileID: 1087128982}
   dcCardToChallenge: {fileID: 1087128987}
   dcGiveUp: {fileID: 1087128986}
