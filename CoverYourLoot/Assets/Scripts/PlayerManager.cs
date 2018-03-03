@@ -41,7 +41,23 @@ public class PlayerManager : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+
         if (wait > 0) { wait -= Time.deltaTime; if (wait < 0) wait = 0; }
+
+        if (Input.GetKeyDown(KeyCode.Space)) { //TEST DELETE _____________________________________
+            Server.playerHand[p, 0] = 5;
+            Server.playerHand[p, 1] = 5;
+            Server.playerHand[p, 2] = 5;
+            Server.playerHand[p, 3] = 5;
+            for (var i = 0; i < 4; i++) {
+                Stack newStack = new Stack();
+                newStack.count = 2;
+                newStack.type = 5;
+                Server.c.pm[p].playerStack.Add(newStack);
+                Server.c.pm[p].UpdateStackVisual();
+            }
+        }
+
     }
 
     IEnumerator AICor() {

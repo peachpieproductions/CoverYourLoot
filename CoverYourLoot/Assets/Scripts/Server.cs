@@ -29,6 +29,7 @@ public class Server : MonoBehaviour {
     public PlayerManager[] pm = new PlayerManager[4];
     public int playerTurn;
     public int challengeType;
+    public int deckReshuffles = 1;
 
 	// Use this for initialization
 	void Awake () {
@@ -44,25 +45,18 @@ public class Server : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        if (Input.GetKeyDown(KeyCode.Space)) { //TEST DELETE _____________________________________
-            playerHand[0, 0] = 5;
-            playerHand[0, 1] = 5;
-            playerHand[0, 2] = 5;
-            playerHand[0, 3] = 5;
-            playerHand[1, 0] = 5;
-            playerHand[1, 1] = 5;
-            playerHand[1, 2] = 5;
-            playerHand[1, 3] = 5;
-            for (var i = 0; i < 4; i++) {
-                Stack newStack = new Stack();
-                newStack.count = 2;
-                newStack.type = 5;
-                pm[0].playerStack.Add(newStack);
-                pm[1].playerStack.Add(newStack);
-                pm[0].UpdateStackVisual();
-                pm[1].UpdateStackVisual();
+
+        if (deck.Count == 0) {
+            if (deckReshuffles > 0) {
+                deckReshuffles--;
+                BuildDeck();
+            } else {
+                //GAME OVER HERE
+                //Show Winner!
             }
         }
+
+        
         if (Input.GetKeyDown(KeyCode.Backspace)) { //Restart game
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
