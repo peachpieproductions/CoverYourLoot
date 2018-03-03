@@ -30,6 +30,7 @@ public class PlayerManager : MonoBehaviour {
     public bool inChallenge;
     public int challengeType;
     public bool isChallengeTurn;
+    public float wait;
 
     // Use this for initialization
     void Start() {
@@ -40,7 +41,7 @@ public class PlayerManager : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-
+        if (wait > 0) { wait -= Time.deltaTime; if (wait < 0) wait = 0; }
     }
 
     IEnumerator AICor() {
@@ -117,33 +118,40 @@ public class PlayerManager : MonoBehaviour {
         discarding = false;
     }
 
+    int prevStartChall;
     public void StartChallenge(IntBackchannelType newInt) {
         if (newInt != null) {
-            var i = newInt.INT_VALUE;
-            if (i < 1) return;
-            Debug.Log(i);
-            var victim = int.Parse(i.ToString()[0].ToString())-1;
-            var cardToAttackWith = int.Parse(i.ToString()[1].ToString()) + 1;
-            
-            if (!inChallenge) {
-                StartCoroutine(Server.c.Challenge(victim, cardToAttackWith, p, Server.c.pm[victim].playerStack[Server.c.pm[victim].playerStack.Count - 1].type));
+            if (prevStartChall != newInt.INT_VALUE) {
+                var i = newInt.INT_VALUE;
+                if (i < 1) return;
+                Debug.Log(i);
+                var victim = int.Parse(i.ToString()[0].ToString()) - 1;
+                var cardToAttackWith = int.Parse(i.ToString()[1].ToString()) + 1;
+
+                if (!inChallenge) {
+                    StartCoroutine(Server.c.Challenge(victim, cardToAttackWith, p, Server.c.pm[victim].playerStack[Server.c.pm[victim].playerStack.Count - 1].type));
+                }
             }
+            prevStartChall = newInt.INT_VALUE;
         }
     }
 
     int prevCardVal;
     public void CardToChallenge(IntBackchannelType slot) {
+        if (wait > 0) return;
         if (slot != null) {
             if (prevCardVal != slot.INT_VALUE) {
                 Debug.Log("cardtoChallenge" + slot.INT_VALUE);
                 cardToAttackWith = slot.INT_VALUE + 1;
             }
             prevCardVal = slot.INT_VALUE;
+            wait = 1f;
         }
     }
 
     bool prevGiveUpVal;
     public void GiveUpChallenge(BoolBackchannelType gaveUp) {
+        if (wait > 0) return;
         if (gaveUp != null) {
             if (prevGiveUpVal != gaveUp.BOOL_VALUE) {
                 Debug.Log("GaveUp" + gaveUp.BOOL_VALUE);
@@ -152,6 +160,7 @@ public class PlayerManager : MonoBehaviour {
                 }
             }
             prevGiveUpVal = gaveUp.BOOL_VALUE;
+            wait = 1f;
         }
     }
 
