@@ -138,20 +138,17 @@ public class PlayerManager : MonoBehaviour {
 
     int prevCardVal;
     public void CardToChallenge(IntBackchannelType slot) {
-        if (wait > 0) return;
         if (slot != null) {
             if (prevCardVal != slot.INT_VALUE) {
                 Debug.Log("cardtoChallenge" + slot.INT_VALUE);
                 cardToAttackWith = slot.INT_VALUE + 1;
             }
             prevCardVal = slot.INT_VALUE;
-            wait = 1f;
         }
     }
 
     bool prevGiveUpVal;
     public void GiveUpChallenge(BoolBackchannelType gaveUp) {
-        if (wait > 0) return;
         if (gaveUp != null) {
             if (prevGiveUpVal != gaveUp.BOOL_VALUE) {
                 Debug.Log("GaveUp" + gaveUp.BOOL_VALUE);
@@ -160,7 +157,6 @@ public class PlayerManager : MonoBehaviour {
                 }
             }
             prevGiveUpVal = gaveUp.BOOL_VALUE;
-            wait = 1f;
         }
     }
 
