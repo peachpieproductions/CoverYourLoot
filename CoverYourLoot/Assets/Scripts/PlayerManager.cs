@@ -44,7 +44,7 @@ public class PlayerManager : MonoBehaviour {
 
         if (wait > 0) { wait -= Time.deltaTime; if (wait < 0) wait = 0; }
 
-        if (Input.GetKeyDown(KeyCode.Space)) { //TEST DELETE _____________________________________
+        if (Input.GetKeyDown(KeyCode.F12)) { //TEST DELETE _____________________________________
             Server.playerHand[p, 0] = 5;
             Server.playerHand[p, 1] = 5;
             Server.playerHand[p, 2] = 5;

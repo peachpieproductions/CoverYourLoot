@@ -10,7 +10,7 @@ public class CardClient : MonoBehaviour {
     public bool inHand;
     internal Vector3 startPos;
     public bool faceUp;
-    Image image;
+    internal Image image;
     public bool selected;
     public bool isChallengeCard;
 

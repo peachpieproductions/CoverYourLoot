@@ -98,7 +98,7 @@ public class C : MonoBehaviour {
             }
         }
     }
-
+    /*
     void OnGUI() {
         int i = 0;
         GUI.Label(new Rect(10, 10 + i * 15, 500, 20), "Build: 2"); i++;
@@ -115,7 +115,7 @@ public class C : MonoBehaviour {
         GUI.Label(new Rect(10, 10 + i * 15, 500, 20), "cardid3: " + cardIds[2]); i++;
         GUI.Label(new Rect(10, 10 + i * 15, 500, 20), "cardid4: " + cardIds[3]); i++;
     }
-
+    */
     public void EnableDiscarding() {
         discarding = !discarding;
         if (discarding) logText.text = "Discard One Card!";
@@ -139,6 +139,12 @@ public class C : MonoBehaviour {
     IEnumerator SlowUpdate() {
         while (true) {
             if (wait > 0) { yield return new WaitForSeconds(wait); wait = 0f; }
+
+            //refresh cards
+            for (var i = 0; i < 4; i++) {
+                if (cards[i].faceUp) cards[i].image.sprite = data.cardSprites[cardIds[i]];
+            }
+
             if (isTurn) {
                 if (canMatchWithDiscard) {
                     bool canMatch = false;

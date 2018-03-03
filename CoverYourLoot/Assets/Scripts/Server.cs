@@ -18,6 +18,7 @@ public class Server : MonoBehaviour {
     public GameObject[] prefabs;
     public GameObject canvas;
     public GameObject challengePanel;
+    public GameObject endOfGamePanel;
     public static int[,] playerHand = new int[4, 4];
     public GameObject[] playerManagers = new GameObject[4];
     public GameObject[] playerPanels = new GameObject[4];
@@ -51,8 +52,13 @@ public class Server : MonoBehaviour {
                 deckReshuffles--;
                 BuildDeck();
             } else {
-                //GAME OVER HERE
-                //Show Winner!
+                //Game over
+                int winner = 0;
+                for (var i = 0; i < 4; i++) {
+                    if (pm[i].totalWorth > pm[winner].totalWorth) winner = i;
+                }
+                endOfGamePanel.SetActive(true);
+                endOfGamePanel.transform.GetChild(0).GetComponent<Text>().text = "Player " + winner + " Wins!";
             }
         }
 
@@ -80,8 +86,6 @@ public class Server : MonoBehaviour {
         for (i = 0; i < 8; i++) { deck.Add(2); } //Big Gold Sack x 8 - 25,000
         for (i = 0; i < 8; i++) { deck.Add(3); } //Diamond x 8 - 20,000
 
-        //for (i = 0; i < 90; i++) { deck.Add(3); } //DELETE _ FOR TESTING - ONLY DIAMONDS
-
         for (var j = 4; j < 13; j++) {
             for (i = 0; i < 10; i++) { deck.Add(j); } //Other Cards x 10
         }
@@ -105,6 +109,7 @@ public class Server : MonoBehaviour {
 Debug.Log("Start Challenge _____");
         foreach (Image img in challengePanel.transform.GetChild(0).GetComponentsInChildren<Image>()) { if (img.transform.GetSiblingIndex() > 0) img.enabled = false; }
         foreach (Image img in challengePanel.transform.GetChild(1).GetComponentsInChildren<Image>()) { if (img.transform.GetSiblingIndex() > 0) img.enabled = false; }
+        challengePanel.transform.GetChild(2).GetComponent<Text>().text = "P" + (p + 1) + " VS " + "P" + (victim + 1);
         challengeType = type;
         challengePanel.SetActive(true);
         pm[p].cardToAttackWith = cardSlot;
