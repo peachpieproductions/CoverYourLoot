@@ -99,6 +99,7 @@ public class C : MonoBehaviour {
 
     void OnGUI() {
         int i = 0;
+        GUI.Label(new Rect(10, 10 + i * 15, 500, 20), "Build: 1"); i++;
         GUI.Label(new Rect(10, 10 + i * 15, 500, 20), "Pnum: " + pnum); i++;
         GUI.Label(new Rect(10, 10 + i * 15, 500, 20), "isChallengeTurn: " + isChallengeTurn); i++;
         GUI.Label(new Rect(10, 10 + i * 15, 500, 20), "challengeType: " + challengeType); i++;
